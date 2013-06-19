@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <style>
+
+            .arc path {
+                stroke: #fff;
+            }
+            
+            .content {
+                width: 750px;
+                margin: auto;
+            }
+            
+            h3 {
+                font-size: 36px;
+                text-align: center;
+            }
+
+        </style>
+    </head>
+    <body>
+        <h3># Logs / Log Level</h3>
+        <div class="content"></div>
+        <script src="d3.v3.min.js"></script>
+        <script>
+
+            var diameter = 600,
+                width = diameter + 150,
+                radius = diameter / 2;
+
+            var colors = d3.scale.category10();
+
+            var colorRange = colors.range();
+
+            var color = d3.scale.ordinal()
+                    .range(colorRange);
+
+            var arc = d3.svg.arc()
+                    .outerRadius(radius)
+                    .innerRadius(0);
+
+            var pie = d3.layout.pie()
+                    .sort(null)
+                    .value(function(d) {
+                        return d.value;
+                    });
+
+            var par = d3.selectAll(".content")
+                    .append("svg")
+                    .attr("width", width)
+                    .attr("height", diameter);
+            
+            var svg= par.append("g")
+                    .attr("transform", "translate(" + radius + "," + radius + ")");
+
+            d3.json("application/services/logs/count/group/by/name/level", function(data) {
+
+                color.domain(d3.keys(data[0]).filter(function(key) {
+                    return (key !== "key" && key !== "value");
+                }));
+                
+                data.forEach(function(d) {
+                    d.value = +d.value;
+                });
+
+                var g = svg.selectAll(".arc")
+                        .data(pie(data))
+                        .enter()
+                        .append("g")
+                        .attr("class", "arc");
+
+                g.append("path")
+                        .attr("d", arc)
+                        .style("fill", function(d) {
+                            return color(d.data.key);
+                        });
+
+                g.append("title")
+                        .text(function(d) {
+                            return d.data.key + ": " + d.value;
+                        });
+                        
+                var legend = par.selectAll(".legend")
+                        .data(color.domain())
+                        .enter()
+                        .append("g")
+                        .attr("class", "legend")
+                        .attr("transform", function(d, i) {
+                            return "translate(0," + i * 25 + ")";
+                        });
+
+                legend.append("rect")
+                        .attr("x", diameter)
+                        .attr("width", 20)
+                        .attr("height", 20)
+                        .style("fill", color);
+
+                legend.append("text")
+                        .attr("x", diameter + 25)
+                        .attr("y", 15)
+                        .text(function(d) {
+                            return d;
+                        });
+            });
+
+        </script>
+    </body>
+</html>

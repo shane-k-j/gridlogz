@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+        <style type="text/css">
+
+            .chart {
+                margin: auto;
+            }
+
+            text {
+                font-size: 12px;
+            }
+
+            rect {
+                fill: none;
+            }
+        
+            h3 {
+                font-size: 36px;
+                text-align: center;
+            }
+
+        </style>
+    </head>
+  <body>
+    <h3># Logs / Logger (Package) & Class</h3>
+    <div class="content"></div>
+    <script src="d3.v3.min.js"></script>
+    <script type="text/javascript">
+
+        var w = 1200,
+            h = 600,
+            x = d3.scale.linear().range([0, w]),
+            y = d3.scale.linear().range([0, h]),
+            color = d3.scale.category20c(),
+            root,
+            node;
+
+        var treemap = d3.layout.treemap()
+                .round(false)
+                .size([w, h])
+                .sticky(true)
+                .children(function(d) {
+                    return d.values;
+                });
+
+        var svg = d3.selectAll(".content")
+                .append("div")
+                .attr("class", "chart")
+                .style("width", w + "px")
+                .style("height", h + "px")
+                .append("svg")
+                .attr("width", w)
+                .attr("height", h)
+                .append("g");
+
+        d3.json("application/services/logs/count/group/by/name/class", function(data) {
+
+            node = root = {values: data};
+
+            var nodes = treemap.nodes(root)
+                    .filter(function(d) {
+                        return !d.values;
+                    });
+
+            var cell = svg.selectAll("g")
+                    .data(nodes)
+                    .enter()
+                    .append("g")
+                    .attr("class", "cell")
+                    .attr("transform", function(d) {
+                        return "translate(" + d.x + "," + d.y + ")";
+                    })
+                    .on("click", function(d) {
+                        return zoom(node == d.parent ? root : d.parent);
+                    });
+
+            cell.append("rect")
+                    .attr("width", function(d) {
+                        return d.dx - 1;
+                    })
+                    .attr("height", function(d) {
+                        return d.dy - 1;
+                    })
+                    .style("fill", function(d) {
+                        return color(d.parent.key);
+                    });
+
+            cell.append("text")
+                    .attr("x", function(d) { return d.dx / 2; })
+                    .attr("y", function(d) { return d.dy / 2; })
+                    .attr("dy", ".35em")
+                    .attr("text-anchor", "middle")
+                    .text(function(d) {
+                        return d.key;
+                    })
+                    .style("opacity", function(d) {
+                        d.w = this.getComputedTextLength();
+                        return d.dx > d.w ? 1 : 0;
+                    });
+                    
+            cell.append("title")
+                .text(function(d) {
+                    return d.key + ": " + d.value;
+                });
+
+            d3.select(window).on("click", function() {
+                zoom(root);
+            });
+        });
+
+        function zoom(d) {
+
+            var kx = w / d.dx,
+                ky = h / d.dy;
+            
+            x.domain([d.x, d.x + d.dx]);
+            y.domain([d.y, d.y + d.dy]);
+
+            var t = svg.selectAll("g.cell")
+                    .transition()
+                    .duration(d3.event.altKey ? 7500 : 750)
+                    .attr("transform", function(d) {
+                        return "translate(" + x(d.x) + "," + y(d.y) + ")";
+                    });
+
+            t.select("rect")
+                    .attr("width", function(d) { return kx * d.dx - 1; })
+                    .attr("height", function(d) { return ky * d.dy - 1; })
+
+            t.select("text")
+                    .attr("x", function(d) { return kx * d.dx / 2; })
+                    .attr("y", function(d) { return ky * d.dy / 2; })
+                    .style("opacity", function(d) { return kx * d.dx > d.w ? 1 : 0; });
+
+            node = d;
+
+            d3.event.stopPropagation();
+        }
+
+    </script>
+  </body>
+</html>
