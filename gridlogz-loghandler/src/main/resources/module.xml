@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module xmlns="urn:jboss:module:1.1" name="com.howtojboss.gridlogz">
 
-    <!--properties>
-        <property name="jboss.api" value="unsupported"/>
-    </properties-->
-
     <resources>
-        <resource-root path="${project.build.finalName}.jar" />
+        <resource-root path="gridlogz-common-${project.version}.jar" />
+        <resource-root path="gridlogz-loghandler-${project.version}.jar" />
     </resources>
 
     <dependencies>

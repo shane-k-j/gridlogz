@@ -8,13 +8,6 @@
     </formats>
     <fileSets>
         <fileSet>
-            <directory>${project.build.directory}</directory>
-            <outputDirectory>modules/system/layers/base/com/howtojboss/gridlogz/main</outputDirectory>
-            <includes>
-                <include>*.jar</include>
-            </includes>
-        </fileSet>
-        <fileSet>
             <directory>${project.build.outputDirectory}</directory>
             <outputDirectory>modules/system/layers/base/com/howtojboss/gridlogz/main</outputDirectory>
             <includes>
@@ -22,4 +15,13 @@
             </includes>
         </fileSet>
     </fileSets>
+    <dependencySets>
+        <dependencySet>
+            <outputDirectory>modules/system/layers/base/com/howtojboss/gridlogz/main</outputDirectory>
+            <includes>
+                <include>com.howtojboss.gridlogz:*</include>
+            </includes>
+            <useTransitiveDependencies>false</useTransitiveDependencies>
+        </dependencySet>
+    </dependencySets>
 </assembly>
