@@ -1,39 +1,93 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8" />
         <title>GridLogZ - Home</title>
+        <style>
+
+            h1 {
+                font-size: 36px;
+                margin: auto;
+                text-align: center;
+                width: 600px;
+            }
+            
+            .clear {
+                clear: both;
+            }
+            
+            .chart-cont {
+                margin: auto;
+                padding-top: 20px;
+                position: relative;
+                width: 600px;
+            }
+            
+            .chart-cont .image-cont {
+                float: left;
+                padding-right: 10px;
+                width: 150px;
+            }
+            
+            .chart-cont .image-cont img {
+                width: 150px;
+            }
+            
+            .chart-cont .info-cont {
+                float: left;
+                padding-bottom: 10px;
+                width: 440px;
+            }
+            
+            .chart-cont .info-cont .title {
+                float: left;
+                font-weight: bold;
+                width: 300px;
+            }
+            
+            .chart-cont .info-cont .link {
+                float: left;
+                text-align: right;
+                width: 140px;
+            }
+            
+            .chart-cont .info-cont .desc {
+                padding-top: 10px;
+            }
+            
+        </style>
     </head>
     <body>
-        <h1 style="width: 600px;margin: auto;font-size: 36px;text-align: center;">GridLogZ</h1>
-        <div style="width: 600px;margin: auto;padding-top: 20px;position: relative;">
-            <div style="width: 150px;float: left;padding-right: 10px;"><img src="pie.png" width="150" /></div>
-            <div style="width: 440px;float: left;padding-bottom: 10px;">
-               <div style="width: 300px;float: left;"><b># Logs / Log Level</b></div>
-               <div style="width: 140px;float: left;text-align: right;"><a href="levels.html">View</a></div>
-               <div style="clear:both;"></div>
-               <div style="padding-top: 10px;">A pie chart that shows the number of log records per log level.</div>
+        <h1>GridLogZ</h1>
+        <div class="chart-cont">
+            <div class="image-cont"><img src="images/pie.png" /></div>
+            <div class="info-cont">
+               <div class="title"># Logs / Log Level</div>
+               <div class="link"><a href="levels.html">View</a></div>
+               <div class="clear"></div>
+               <div class="desc">A pie chart that shows the number of log records per log level.</div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="chart-cont">
+            <div class="image-cont"><img src="images/bubble.png" /></div>
+            <div class="info-cont">
+               <div class="title"># Logs / Logger (Package)</div>
+               <div class="link"><a href="loggers.html">View</a></div>
+               <div class="clear"></div>
+               <div class="desc">A bubble chart the shows the number of log records per logger (package). The size of the circle reflects the number of log records.</div>
             </div>
             <div style="clear: both;"></div>
         </div>
-        <div style="width: 600px;margin: auto;padding-top: 20px;position: relative;">
-            <div style="width: 150px;float: left;padding-right: 10px;"><img src="bubble.png" width="150" /></div>
-            <div style="width: 440px;float: left;padding-bottom: 10px;">
-               <div style="width: 300px;float: left;"><b># Logs / Logger (Package)</b></div>
-               <div style="width: 140px;float: left;text-align: right;"><a href="loggers.html">View</a></div>
-               <div style="clear:both;"></div>
-               <div style="padding-top: 10px;">A bubble chart the shows the number of log records per logger (package). The size of the circle reflects the number of log records.</div>
+        <div class="chart-cont">
+            <div class="image-cont"><img src="images/treemap.png" /></div>
+            <div class="info-cont">
+               <div class="title"># Logs / Logger (Package) & Class</div>
+               <div class="link"><a href="classes.html">View</a></div>
+               <div class="clear"></div>
+               <div class="desc">A tree map chart that shows the number of log records per logger (package) and per class. A log record is display as a rectangle. A class is displayed as a rectangle within its log record's (package) rectangle. The size of the class rectangle reflects the number of log records.</div>
             </div>
-            <div style="clear: both;"></div>
-        </div>
-        <div style="width: 600px;margin: auto;padding-top: 20px;position: relative;">
-            <div style="width: 150px;float: left;padding-right: 10px;"><img src="treemap.png" width="150" /></div>
-            <div style="width: 440px;float: left;padding-bottom: 10px;">
-               <div style="width: 300px;float: left;"><b># Logs / Logger (Package) & Class</b></div>
-               <div style="width: 140px;float: left;text-align: right;"><a href="classes.html">View</a></div>
-               <div style="clear:both;"></div>
-               <div style="padding-top: 10px;">A tree map chart that shows the number of log records per logger (package) and per class. A log record is display as a rectangle. A class is displayed as a rectangle within its log record's (package) rectangle. The size of the class rectangle reflects the number of log records.</div>
-            </div>
-            <div style="clear: both;"></div>
+            <div class="clear"></div>
         </div>
     </body>
 </html>

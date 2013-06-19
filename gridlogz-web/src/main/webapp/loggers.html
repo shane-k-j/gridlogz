@@ -2,8 +2,14 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <title>GridLogZ - # Logs / Logger (Package)</title>
         <style>
 
+            h3 {
+                font-size: 36px;
+                text-align: center;
+            }
+            
             text {
                 font-size: 12px;
             }
@@ -13,17 +19,12 @@
                 margin: auto;
             }
             
-            h3 {
-                font-size: 36px;
-                text-align: center;
-            }
-            
         </style>
     </head>
     <body>
         <h3># Logs / Logger (Package)</h3>
         <div class="content"></div>
-        <script src="d3.v3.min.js"></script>
+        <script src="js/d3.v3.min.js"></script>
         <script>
 
             var diameter = 600,
@@ -43,7 +44,7 @@
                     .attr("height", diameter)
                     .attr("class", "bubble");
             
-            d3.json("application/services/logs/count/group/by/name/logger", function(data) {
+            d3.json("http://localhost:8080/gridlogz-services/application/services/logs/count/group/by/name/logger", function(data) {
                 
                 var node = svg.selectAll(".node")
                         .data(bubble.nodes({children: data})
