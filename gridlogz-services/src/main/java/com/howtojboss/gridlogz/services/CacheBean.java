@@ -129,7 +129,8 @@ public class CacheBean {
             
             public int compare(LogMessage lm1, LogMessage lm2) {
                 
-                return Long.compare(lm1.getMillis(), lm2.getMillis());
+                return Long.valueOf(lm1.getMillis()).compareTo(Long.valueOf(lm2.getMillis()));
+                //return Long.compare(lm1.getMillis(), lm2.getMillis());
             }
         });
         
