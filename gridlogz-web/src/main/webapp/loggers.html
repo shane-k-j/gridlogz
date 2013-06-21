@@ -44,7 +44,7 @@
                     .attr("height", diameter)
                     .attr("class", "bubble");
             
-            d3.json("http://localhost:8080/gridlogz-services/application/services/logs/count/group/by/name/logger", function(data) {
+            d3.json("http://localhost:8180/gridlogz-services/application/services/logs/count/group/by/name/logger", function(data) {
                 
                 var node = svg.selectAll(".node")
                         .data(bubble.nodes({children: data})
